@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data Upload</title>
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  {% load static %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="{% static 'realtimeFinancialTimeSeries/style.css' %}">
+
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+  <div class="container-fluid">
+
+    <a class="navbar-brand" href="#">Forecasting Financial Data in Real-Time</a>
+  </div>
+</nav>
+
+
+<form method="post" enctype="multipart/form-data" action="selecttarget">
+  {% csrf_token %}
+<!-- Adding a form to upload excel file -->
+<center>
+<h4>Select Input Dataset</h4>
+  <br>
+<input type="file" id="excelfile" name="excelfile"/>
+<!-- Adding a submit button to upload excel file -->
+  <br><br>
+  <input type="submit" value="Submit" name="excelfileupload">
+</center>
+
+</form>
+
+  {% block content %}
+  {% endblock %}
+</div>
+</body>
+</html>

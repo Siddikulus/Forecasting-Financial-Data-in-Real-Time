@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EDA</title>
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  {% load static %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'realtimeFinancialTimeSeries/style.css' %}">
+
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+  <div class="container-fluid">
+
+    <a class="navbar-brand" href="#">Forecasting Financial Data in Real-Time</a>
+  </div>
+</nav>
+
+<div>
+    <center>
+    <img src="/{{ imagepath }}" alt="Seasonal Decompose">
+    </center>
+</div>
+
+<div>
+    <center>
+    <form method="post" enctype="multipart/form-data" action="correlation">
+    {% csrf_token %}
+
+  <input type="submit" value="Continue" name="submit_target_variable">
+    </form>
+    </center>
+</div>
+</body>
+</html>

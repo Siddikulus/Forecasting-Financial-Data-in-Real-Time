@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Exogenous Variables</title>
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  {% load static %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'realtimeFinancialTimeSeries/style.css' %}">
+
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+  <div class="container-fluid">
+
+    <a class="navbar-brand" href="#">Forecasting Financial Data in Real-Time</a>
+  </div>
+</nav>
+
+<!--Correlation Table-->
+<form method="post" enctype="multipart/form-data" action="modelselection">
+    {% csrf_token %}
+<table class="table table-dark table-striped-columns table-hover">
+<!--Column Headers-->
+  <thead>
+    <tr>
+      <th class="table-default" style="text-align: center">Exogenous Variable</th>
+      <th class="table-default" style="text-align: center">Correlation Coefficient</th>
+      <th class="table-default" style="text-align: center">Select Features</th>
+    </tr>
+  </thead>
+
+<!--Table Rows-->
+  <tbody>
+  {% for row in correlation_matrix.itertuples %}
+
+    {% if row.absolute_coefficients >= 0.8 %}
+
+    <tr class="table-success" style="text-align: center">
+      <td>
+        <button type="button" class="btn btn-outline-success btn-sm">
+          <a href="#" data-toggle="tooltip" data-placement="right" title="<img width='250%' height='200%' src='/{{ imagepath }}{{ row.correlation_to }}.png'>" style="color: #08090a;  font-size: 14px;">
+            {{ row.correlation_to }}
+          </a>
+        </button>
+
+
+      </td>
+      <td>{{ row.correlation_coefficient }}</td>
+      <td>
+        <input class="form-check-input" type="checkbox" value="{{ row.correlation_to }}" name="exogvars[]">
+      </td>
+    </tr>
+    {% endif %}
+
+    {% if row.absolute_coefficients < 0.8 and row.absolute_coefficients >= 0.4 %}
+    <tr class="table-warning" style="text-align: center">
+      <td>
+        <button type="button" class="btn btn-outline-warning btn-sm">
+          <a href="#" data-toggle="tooltip" data-placement="right" title="<img width='250%' height='200%' src='/{{ imagepath }}{{ row.correlation_to }}.png'>" style="color: #08090a;  font-size: 14px;">
+            {{ row.correlation_to }}
+          </a>
+        </button>
+      </td>
+      <td>{{ row.correlation_coefficient }}</td>
+      <td>
+        <input class="form-check-input" type="checkbox" value="{{ row.correlation_to }}" name="exogvars[]">
+      </td>
+    </tr>
+    {% endif %}
+
+    {% if row.absolute_coefficients < 0.4 and row.absolute_coefficients >= 0.0 %}
+    <tr class="table-danger" style="text-align: center">
+      <td>
+        <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="button" aria-pressed="false" autocomplete="off">
+          <a href="#" data-toggle="tooltip" data-placement="left" title="<img width='250%' height='200%' src='/{{ imagepath }}{{ row.correlation_to }}.png'>" style="color: #08090a;  font-size: 14px;">
+            {{ row.correlation_to }}
+          </a>
+        </button>
+      </td>
+      <td>
+        {{ row.correlation_coefficient }}</td>
+      <td>
+        <input class="form-check-input" type="checkbox" value="{{ row.correlation_to }}" name="exogvars[]">
+      </td>
+    </tr>
+    {% endif %}
+   {% endfor %}
+  </tbody>
+</table>
+
+<div>
+  <center>
+    <input type="submit" value="Continue" name="submit_target_variable">
+  </center>
+</div>
+</form>
+
+<script>
+$('a[data-toggle="tooltip"]').tooltip({
+    animated: 'fade',
+    placement: 'bottom',
+    html: true
+});
+</script>
+</body>
+</html>

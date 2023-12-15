@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Model Evaluation</title>
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  {% load static %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'realtimeFinancialTimeSeries/style.css' %}">
+    <link rel="stylesheet" href="{% static 'realtimeFinancialTimeSeries/evaluation.css' %}">
+
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+  <div class="container-fluid">
+
+    <a class="navbar-brand" href="#">Forecasting Financial Data in Real-Time</a>
+  </div>
+</nav>
+
+<!--Model Performance Graph-->
+<div>
+    <center>
+        <img width='900px' height='600px' src="/{{ imagepath }}" alt="Model Performance">
+    </center>
+</div>
+
+<br>
+<br>
+<div>
+    <center>
+ <p>The following exogenous variable were used of our analysis: <b><i><u> {{ exogenous_variables }} </u></i></b></p>
+    </center>
+</div>
+
+<br>
+
+<div class = "text-center">
+    <div>
+        <center>
+            {{ predictedvals|safe }}
+            <h7><b>Forecasted Values</b></h7>
+        </center>
+    </div>
+    <br><br>
+    <div>
+        <center>
+            {{ evaluation_matrix|safe }}
+            <h7><b>Model Evaluation</b></h7>
+        </center>
+    </div>
+</div>
+</body>
+</html>

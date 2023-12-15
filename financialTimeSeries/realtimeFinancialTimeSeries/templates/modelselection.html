@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Model Selection</title>
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  {% load static %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'realtimeFinancialTimeSeries/style.css' %}">
+    <link rel="stylesheet" href="{% static 'realtimeFinancialTimeSeries/modelselection.css' %}">
+
+
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+  <div class="container-fluid">
+
+    <a class="navbar-brand" href="#">Forecasting Financial Data in Real-Time</a>
+  </div>
+</nav>
+
+<!--Multicollinearity-->
+<div>
+    <center>
+    <img width='700px' height='700px' src="/{{ imagepath }}" alt="Multicollinearity">
+    </center>
+</div>
+<br><br>
+
+<!--Algorithm Selection-->
+<form method="post" enctype="multipart/form-data" action="evaluation">
+  {% csrf_token %}
+
+    <center><h2><u><i>Pre-Processing Algorithms</i></u></h2></center>
+    <input class="form-check-input" type="checkbox" value="HighCorrDrop" name="preprocessing[]" id="HighCorrDrop"> Drop one of Highly Correlated Features <br>
+    <input class="form-check-input" type="checkbox" value="standardize" name="preprocessing[]" id="standardize"> Standardization <br>
+    <input class="form-check-input" type="checkbox" value="PCA" name="preprocessing[]" id="PCA"> Principal Component Analysis <br>
+
+
+
+    <center><h2><u><i>Model Selection</i></u></h2></center>
+    <input class="form-check-input" type="checkbox" value="ARIMA" name="modelselection[]" id="Arima"> SARIMA <br>
+<!--    <input class="form-check-input" type="checkbox" value="Prophet" name="modelselection[]" id="Prophet"> Prophet <br>-->
+    <input class="form-check-input" type="checkbox" value="Holt" name="modelselection[]" id="Holt"> Holt-Winters' <br>
+<!--    <input class="form-check-input" type="checkbox" value="Randomforest" name="modelselection[]" id="Randomforest"> Random Forest Regressor <br>-->
+
+
+    <center><input type="submit" value="Continue" name="submit_target_variable"></center>
+</form>
+
+</body>
+</html>
